@@ -11,5 +11,8 @@ Template.home.events({
   'click button': function () {
     // increment the counter when button is clicked
     Session.set("counter", Session.get("counter") + 1);
+    Meteor.call('getApi', 'category', {}, function (error, result) {
+      console.log(result);
+    });
   }
 });

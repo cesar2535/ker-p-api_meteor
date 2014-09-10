@@ -3,7 +3,7 @@ Meteor.startup(function () {
 });
 
 var api_key = 'kp53f713e09d1469.34305937';
-var api_url = 'http://api.kptaipei.tw/v1/'
+var api_url = 'http://api.kptaipei.tw/v1/';
 
 Meteor.methods({
   getApi: function (apiType, paramsObj) {
@@ -12,7 +12,6 @@ Meteor.methods({
     // Just have two params fot this API, 'page' and 'page_size'
     check(apiType, String);
     check(paramsObj, Object);
-    apiType = apiType + '/';
     paramsObj.accessToken = api_key;
     console.log('The type of API: ' + apiType);
     console.log(paramsObj);
@@ -20,7 +19,12 @@ Meteor.methods({
     var infoObj = HTTP.call('GET', api_url + apiType, {
       params: paramsObj
     });
-    console.log(infoObj);
+    // console.log(infoObj);
     return infoObj.data;
+  },
+  getCategoryContent: function(categoryId, paramsObj) {
+    var infoObj = Meteor.apply('getApi', ['category/' + categoryId, paramsObj]);
+    // console.log(infoObj);
+    return infoObj;
   }
 });
